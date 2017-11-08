@@ -103,13 +103,19 @@ def selectSentenceAndRecord(data):
             print("\t" + str(num) + ":" + "\t" + r["pretty"])
             print("\t\t" + r["tran"])
             num += 1
-        selection = int(input("Please select one: "))
+        selection = str(input("Please select one (可用&选择多句，如0&2): "))
+        selection = selection.replace(" ", "")
+        ss = selection.split("&")
         result = "\n" + "\n"
         result += "" + d["word"] + "\n"
         for wt in d["wordTrans"]:
             result += "\t\t" + wt + "\n"
-        result += "\t" + d["sentence"][selection]["pretty"] + "\n"
-        result += "\t" + d["sentence"][selection]["tran"] + "\n"
+        for s in ss:
+            try:
+                result += "\t" + d["sentence"][int(s)]["pretty"] + "\n"
+                result += "\t" + d["sentence"][int(s)]["tran"] + "\n"
+            except:
+                print("找不到此例句！")
         # print(result)
         all += result
         fo.write(result)
