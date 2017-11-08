@@ -81,11 +81,6 @@ def lookUpWords(words):
         for wt in wordTrans:
             print("\t\t" + wt)
         res = getChinaDailyQuery(word)
-        num = 0
-        for r in res:
-            print("\t" + str(num) + ":" + "\t" + r["pretty"])
-            print("\t\t" + r["tran"])
-            num += 1
         result.append({"word": word, "wordTrans": wordTrans, "sentence": res})
         print("【%d/%d】完成单词查询" % (count, numWord))
     return result
