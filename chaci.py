@@ -4,23 +4,32 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import re
+import time
 def getChinaDailyQuery(word):
     query = "http://searchen.chinadaily.com.cn/search?query=" + word
     r = requests.get(query)
     soup = BeautifulSoup(r.text, "html5lib")
+    # print(soup.prettify())
     result = soup.find("ul", { "class" : "cs_sear_list" })
     result = result.select("li p")
     res = []
+    num = len(result)
+    print("成功获取China Daily例句数据！共找到", num, "句")
+    count = 0
     for s in result:
+        count += 1
         before = re.search("(?<=[\.\?;]\s).+?(?=<b>)", str(s))
         after = re.search("(?<=</b>).*?[\.\?;]", str(s))
         if before and after:
             before = before.group(0)
             after = after.group(0)
             sen = before + word + after
+            print("成功解析正文：", sen)
             tran = getGoogleTrans(sen)
             pretty = before + "【" + word + "】" + after
             res.append({"raw": sen, "pretty": pretty, 'tran': tran})
+            print("成功获取翻译", count, "/", num)
+            time.sleep(0.2)
     return res
 
 def getWordTrans(word):
@@ -66,6 +75,10 @@ def lookUpOneWord(word):
 # getWordTrans("submit")
 # getGoogleTrans("Most of the basic models for these objects imply that they are composed almost entirely of neutrons.")
 while 1:
-    word = input("Please input the word you look up: ")
-    lookUpOneWord(word)
-    print("\n\n")
+    try:
+        word = input("Please input the word you look up: ")
+        lookUpOneWord(word)
+    except:
+        print("发生异常!")
+    finally:
+        print("\n\n")
