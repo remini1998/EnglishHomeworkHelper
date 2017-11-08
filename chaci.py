@@ -29,7 +29,7 @@ def getChinaDailyQuery(word):
             tran = getGoogleTrans(sen)
             pretty = before + "【" + word + "】" + after
             res.append({"raw": sen, "pretty": pretty, 'tran': tran})
-            print("成功获取翻译", count, "/", num)
+            print("成功获取翻译", count, "/", num, ":", tran)
             time.sleep(0.2)
     return res
 
