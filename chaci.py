@@ -56,17 +56,15 @@ def getGoogleTrans(sen):
 
 def inputWords():
     words = []
+    word = input("Please input the word you look up (input '0' / Enter twice to end): ")
     while 1:
-        word = input("Please input the word you look up (input '0' to end): ")
         if word == "":
-            continue
+            break
         if word == "0":
             break
         words.append(word)
     num = len(words)
-    print("您输入共%d个词：" % num)
-    for w in words:
-        print(w)
+    print("您一共输入%d个词。" % num)
     print("\n")
     return words
 
